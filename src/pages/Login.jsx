@@ -35,12 +35,6 @@ function Login() {
           Sign in to open your referral dashboard.
         </p>
 
-        {error && (
-          <p className="login-error" role="alert">
-            {error}
-          </p>
-        )}
-
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -66,6 +60,12 @@ function Login() {
           <button type="submit" className="btn-primary">
             Sign in
           </button>
+
+          {error && (
+            <p className="login-error" role="alert">
+              {error}
+            </p>
+          )}
         </form>
       </div>
     </div>

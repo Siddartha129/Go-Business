@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { MetricIcon } from '../components/MetricIcon'
 import { fetchReferrals } from '../services/api'
 import { formatDate, formatProfit } from '../utils/formatters'
 
@@ -111,8 +112,9 @@ function Dashboard() {
               <div className="metrics-grid">
                 {metrics.map((metric) => (
                   <div key={metric.id} className="metric-card">
-                    <span className="metric-label">{metric.label}</span>
+                    <MetricIcon id={metric.id} />
                     <span className="metric-value">{metric.value}</span>
+                    <span className="metric-label">{metric.label}</span>
                   </div>
                 ))}
               </div>
@@ -124,7 +126,7 @@ function Dashboard() {
                 <div className="summary-grid">
                   <div className="summary-item">
                     <span className="summary-label">Service</span>
-                    <span className="summary-value">
+                    <span className="summary-value summary-value--primary">
                       {serviceSummary.service}
                     </span>
                   </div>
@@ -196,13 +198,16 @@ function Dashboard() {
               <h2>All referrals</h2>
 
               <div className="table-controls">
-                <input
-                  type="text"
-                  placeholder="Name or service…"
-                  aria-label="Search referrals"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+                <label className="search-label">
+                  Search
+                  <input
+                    type="text"
+                    placeholder="Name or service…"
+                    aria-label="Search referrals"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </label>
                 <label className="sort-label">
                   Sort by date
                   <select
@@ -257,7 +262,7 @@ function Dashboard() {
                           <td>{row.name}</td>
                           <td>{row.serviceName}</td>
                           <td>{formatDate(row.date)}</td>
-                          <td>{formatProfit(row.profit)}</td>
+                          <td className="profit-cell">{formatProfit(row.profit)}</td>
                         </tr>
                       ))
                     )}
