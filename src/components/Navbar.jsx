@@ -14,9 +14,6 @@ function Navbar() {
       <Link to="/" className="navbar-brand" aria-label="Go to dashboard home">
         Go Business
       </Link>
-      <nav className="navbar-nav" aria-label="Primary">
-        <Link to="/"></Link>
-      </nav>
       <div className="navbar-actions">
         <button type="button" className="btn-try-free">
           Try for free
