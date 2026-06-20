@@ -15,7 +15,7 @@ function Navbar() {
         Go Business
       </Link>
       <nav className="navbar-nav" aria-label="Primary">
-        <Link to="/">Home</Link>
+        <Link to="/"></Link>
       </nav>
       <div className="navbar-actions">
         <button type="button" className="btn-try-free">
