@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -9,7 +9,8 @@ const ROWS_PER_PAGE = 10
 
 function Dashboard() {
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(true)
+  const [initialLoading, setInitialLoading] = useState(true)
+  const [tableLoading, setTableLoading] = useState(false)
   const [error, setError] = useState('')
   const [metrics, setMetrics] = useState([])
   const [serviceSummary, setServiceSummary] = useState(null)
@@ -18,12 +19,17 @@ function Dashboard() {
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState('desc')
   const [currentPage, setCurrentPage] = useState(1)
+  const isFirstLoad = useRef(true)
 
   useEffect(() => {
     let cancelled = false
 
     async function loadData() {
-      setLoading(true)
+      if (isFirstLoad.current) {
+        setInitialLoading(true)
+      } else {
+        setTableLoading(true)
+      }
       setError('')
 
       try {
@@ -42,7 +48,9 @@ function Dashboard() {
         }
       } finally {
         if (!cancelled) {
-          setLoading(false)
+          setInitialLoading(false)
+          setTableLoading(false)
+          isFirstLoad.current = false
         }
       }
     }
@@ -88,7 +96,7 @@ function Dashboard() {
           </p>
         </header>
 
-        {loading && <p className="loading-state">Loading...</p>}
+        {initialLoading && <p className="loading-state">Loading...</p>}
 
         {error && (
           <p className="error-state" role="alert">
@@ -96,7 +104,7 @@ function Dashboard() {
           </p>
         )}
 
-        {!loading && !error && (
+        {!initialLoading && !error && (
           <>
             <section className="section" role="region" aria-label="Overview metrics">
               <h2>Overview</h2>
@@ -207,7 +215,13 @@ function Dashboard() {
                 </label>
               </div>
 
-              <div className="table-wrapper">
+              {tableLoading && (
+                <p className="table-loading" aria-live="polite">
+                  Updating results…
+                </p>
+              )}
+
+              <div className={`table-wrapper${tableLoading ? ' table-wrapper--loading' : ''}`}>
                 <table className="referrals-table">
                   <thead>
                     <tr>

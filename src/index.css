@@ -411,6 +411,17 @@ select {
   outline-offset: -2px;
 }
 
+.table-wrapper--loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.table-loading {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
 /* Pagination */
 .pagination {
   display: flex;
