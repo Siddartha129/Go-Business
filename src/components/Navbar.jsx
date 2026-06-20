@@ -14,17 +14,17 @@ function Navbar() {
       <Link to="/" className="navbar-brand" aria-label="Go to dashboard home">
         Go Business
       </Link>
-      <nav className="navbar-actions" aria-label="Primary">
-        <Link to="/" className="nav-home-link">
-          Home
-        </Link>
+      <nav className="navbar-nav" aria-label="Primary">
+        <Link to="/">Home</Link>
+      </nav>
+      <div className="navbar-actions">
         <button type="button" className="btn-try-free">
           Try for free
         </button>
         <button type="button" className="btn-logout" onClick={handleLogout}>
           Log out
         </button>
-      </nav>
+      </div>
     </header>
   )
 }
